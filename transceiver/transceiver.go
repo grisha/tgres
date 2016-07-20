@@ -384,6 +384,7 @@ func (t *Transceiver) worker(id int64) {
 }
 
 func (t *Transceiver) flushDs(ds *rrd.DataSource, block bool) {
+	log.Printf("ZZZ *** in flushDs() for ds.Id %d", ds.Id)
 	fr := &dsFlushRequest{ds: ds.MostlyCopy()}
 	if block {
 		fr.resp = make(chan bool, 1)
@@ -393,6 +394,7 @@ func (t *Transceiver) flushDs(ds *rrd.DataSource, block bool) {
 		<-fr.resp
 	}
 	ds.LastFlushRT = time.Now()
+	log.Printf("ZZZ *** in flushDs() for ds.Id %d about to call ClearRRAs()", ds.Id)
 	ds.ClearRRAs()
 }
 
@@ -566,6 +568,7 @@ type distDatumDataSource struct {
 }
 
 func (d *distDatumDataSource) Relinquish() error {
+	log.Printf("ZZZ *** in DataSource.Relinquish()")
 	d.t.flushDs(d.ds, true)
 	return nil
 }

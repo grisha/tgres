@@ -619,8 +619,9 @@ func (p *pgSerDe) FlushRoundRobinArchive(rra *rrd.RoundRobinArchive) error {
 }
 
 func (p *pgSerDe) FlushDataSource(ds *rrd.DataSource) error {
-
+	log.Printf("ZZZ *** FlushDataSource: ds_id %d", ds.Id)
 	for _, rra := range ds.RRAs {
+		log.Printf("ZZZ *** FlushDataSource loop: ds_id %d rra.Id %d Start: %v End: %v", rra.DsId, rra.Id, rra.Start, rra.End)
 		if len(rra.DPs) > 0 {
 			if err := p.FlushRoundRobinArchive(rra); err != nil {
 				log.Printf("flushDataSource(): error flushing RRA, probable data loss: %v", err)
