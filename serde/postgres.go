@@ -544,6 +544,7 @@ func dpsAsString(dps map[int64]float64, start, end int64) string {
 }
 
 func (p *pgSerDe) FlushRoundRobinArchive(rra *rrd.RoundRobinArchive) error {
+	log.Printf("ZZZ *** FlushRoundRobinArchive: ds_id %d rra.Id %d Start: %v End: %v", rra.DsId, rra.Id, rra.Start, rra.End)
 	var n int64
 	rraSize := int64(rra.Size)
 	if int32(len(rra.DPs)) == rra.Size { // The whole thing
